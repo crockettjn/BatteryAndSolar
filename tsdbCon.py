@@ -1,6 +1,8 @@
 import time
 import requests
 import json
+# Random only needed for testing, not the actual tsdbWrite class
+import random
 
 
 class tsdbWrite:
@@ -47,7 +49,11 @@ class tsdbWrite:
 # is just for testing and as an example of how to use it.
 def main():
     metric = tsdbWrite('http://crockett.info:4242')
-    metric.push_metric("rpi", "CPU", 10)
+    while True:
+        metric.push_metric("rpi", "CPU", random.randrange(1, 99))
+        metric.push_metric("rpi", "Memory", random.randrange(1, 10))
+        metric.push_metric("rpi", "Disk", random.randrange(1, 30))
+        time.sleep(1)
 
 
 if __name__ == "__main__":
