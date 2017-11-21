@@ -1,6 +1,6 @@
-from serial import serial
+import serial
 import tsdbCon
-import time
+import struct
 
 
 def relayControl(data):
@@ -21,13 +21,13 @@ def pushMetric(metric, data):
 def main():
     ser = serial.Serial('/dev/ttyACM0', 9600)
     metric = tsdbCon.tsdbWrite('http://crockett.info:4242')
-    results = []
     while 1:
-        results = ser.readline()
+        results = ser.readline().split()
+        print(type(results[0]))
+        print(struct.unpack('d', struct.pack('Q', results[0]))[0])
         print(results)
         #pushMetric(metric, results)
-        relayControl(results)
-        time.sleep(1)
+        #relayControl(results)
 
 
 if __name__ == "__main__":

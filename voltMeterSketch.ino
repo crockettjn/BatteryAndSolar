@@ -19,6 +19,7 @@ void setup()
 
 void loop()
 {
+    delay(1000);
     // take a number of analog samples and add them up
     while (sample_count < NUM_SAMPLES) {
         sum1 += analogRead(A0);
@@ -42,13 +43,13 @@ void loop()
     // divides by 11. 11.132 is the calibrated voltage divide
     // value
     Serial.print(voltage1 * 11.0);
-    Serial.print(" -- ");
+    Serial.print(" ");
     Serial.print(voltage2 * 11.0);
-    Serial.print(" -- ");
+    Serial.print(" ");
     Serial.print(voltage3 * 11.0);
-    Serial.print(" -- ");
+    Serial.print(" ");
     Serial.print(voltage4 * 11.0);
-    Serial.print(" -- ");
+    Serial.print(" ");
     Serial.println(voltage5 * 11.0);
     sample_count = 0;
     sum1 = 0;
