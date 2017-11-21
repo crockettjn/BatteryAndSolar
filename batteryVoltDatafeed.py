@@ -1,6 +1,5 @@
 import serial
 import tsdbCon
-import struct
 
 
 def relayControl(data):
@@ -11,6 +10,7 @@ def relayControl(data):
 
 
 def pushMetric(metric, data):
+    print(data[0])
     metric.push_metric("BatteryBank", "Pgroup1", data[0])
     metric.push_metric("BatteryBank", "Pgroup2", data[1])
     metric.push_metric("BatteryBank", "Pgroup3", data[2])
@@ -22,12 +22,13 @@ def main():
     ser = serial.Serial('/dev/ttyACM0', 9600)
     metric = tsdbCon.tsdbWrite('http://crockett.info:4242')
     while 1:
-        results = ser.readline().split()
-        print(type(results[0]))
-        print(struct.unpack('d', struct.pack('Q', results[0]))[0])
-        print(results)
-        #pushMetric(metric, results)
-        #relayControl(results)
+        results = ser.readline().decode("utf-8").split()
+        if len(results) > 4:
+            print(results)
+            pushMetric(metric, results)
+            #relayControl(results)
+        else:
+            print("Length too small")
 
 
 if __name__ == "__main__":
