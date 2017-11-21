@@ -1,7 +1,6 @@
-#/usr/bin/python2
-
-import serial
+from serial import serial
 import tsdbCon
+import time
 
 
 def relayControl(data):
@@ -25,8 +24,10 @@ def main():
     results = []
     while 1:
         results = ser.readline()
-        pushMetric(metric, results)
+        print(results)
+        #pushMetric(metric, results)
         relayControl(results)
+        time.sleep(1)
 
 
 if __name__ == "__main__":
